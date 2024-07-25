@@ -6,8 +6,7 @@ class NumberGuessingGame {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         
-        System.out.println("*****Welcome to guessing the number game!");
-        System.out.println("*****Try to guess the number 1-100, 7 tries remain.\n");
+        System.out.println("*****Try to guess the number 1-100, 7 tries remain*****\n");
 
         boolean playAgain = true;
 
