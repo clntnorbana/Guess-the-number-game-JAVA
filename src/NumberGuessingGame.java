@@ -8,25 +8,26 @@ class App {
 
         int numberToGuess = random.nextInt(100) + 1;
         int numberOfTries = 0;
-        boolean hasGuessedCorrecty = false;
-        final int MAX_LIMIT = 7;
+        int triesLeft;
         int guess;
+        final int MAXIMUM_TRIES = 7;
+        boolean hasGuessedCorrectly = false;
 
-        while (!hasGuessedCorrecty && numberOfTries < MAX_LIMIT) {
+        while (!hasGuessedCorrectly && numberOfTries < MAXIMUM_TRIES) {
             System.out.print("Enter your guess: ");
 
             if(scan.hasNextInt()) {
                 guess = scan.nextInt();
                 numberOfTries++;
-                hasGuessedCorrecty = checkGuess(guess, numberToGuess);
-                int triedNumber = MAX_LIMIT - numberOfTries;
-
-                if(!hasGuessedCorrecty) {
-                    if(guess < numberToGuess) {
-                        System.out.println("Higher, try again, " + triedNumber + " tries left");
-                    } else {
-                        System.out.println("Lower, try again, " + triedNumber + " tries left");
-                    }
+                triesLeft = MAXIMUM_TRIES - numberOfTries;
+ 
+                hasGuessedCorrectly = checkGuess(guess, numberToGuess);
+                
+                if(!hasGuessedCorrectly) {
+                   System.out.println(takeAGuess(guess, numberToGuess, triesLeft));
+                } else {
+                    System.out.println("Congratulations! you guessed the number in " + numberOfTries + " tries");
+                    scan.close();
                 }
 
             } else {
@@ -34,16 +35,26 @@ class App {
                 scan.next();
             }
 
-            if(numberOfTries == MAX_LIMIT && !hasGuessedCorrecty) {
-                System.out.println("Game Over! No tries remaining, the number is " + numberToGuess);
+            if(numberOfTries == MAXIMUM_TRIES && !hasGuessedCorrectly) {
+                System.out.println("Game Over! no tries remain, the number is " + numberToGuess);
             }
         }
 
-        System.out.println("Congratulations! you guessed the number in " + numberOfTries + " tries");
-        scan.close();
     }
 
     public static boolean checkGuess(int guess, int numberToGuess) {
         return guess == numberToGuess;
+    }
+
+    public static String takeAGuess(int guess, int numberToGuess, int triesLeft) {
+        String message;
+
+        if(guess < numberToGuess) {
+            message = "Higher! try again, " + triesLeft + " tries left";
+        }  else {
+            message = "Lower! try again, " + triesLeft + " tries left";
+        }
+
+        return message;
     }
 }
